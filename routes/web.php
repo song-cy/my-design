@@ -11,4 +11,28 @@
 |
 */
 
-Route::get('/', 'PagesController@root')->name('root');
+Route::get('/','LoginController@login')->name('login'); //用户登录页面
+Route::get('town','ApiController@town');//所属县、乡镇联动api
+
+
+//前台（客户）路由部分（无需权限判断）
+Route::prefix('user')->group(function (){
+    Route::post('check','LoginController@check');   //用户登录认证
+    Route::get('logout','LoginController@logout');   //退出登录路由
+
+});
+Route::prefix('user')->middleware('auth:customer')->group(function (){  //需权限判断
+    Route::get('products/sort/{sort?}', 'ProductsController@index')->name('products.index');   //用户（商品）首页
+    Route::get('products/{product}', 'ProductsController@show')->name('products.show'); //商品详情页
+
+    Route::get('edit','CustomersController@edit');  //用户修改个人信息页面
+    Route::put('update','CustomersController@update')->name('user.update'); //用户修改操作
+    Route::get('town/{id}','CustomersController@town');//获取该县下的乡镇
+
+    Route::get('pages','PagesController@root');
+
+    Route::post('cart', 'CartController@add')->name('cart.add'); //商品添加至购物车
+    Route::get('cart', 'CartController@index')->name('cart.index'); //查看购物车
+    Route::any('cart/{sku}', 'CartController@remove')->name('cart.remove');//商品从购物车中删除
+
+});
