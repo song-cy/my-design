@@ -16,6 +16,9 @@
 
       <!-- Right Side Of Navbar -->
       <ul class="navbar-nav navbar-right">
+        <li class="nav-item ">
+           <a class="nav-link mt-1" href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"></i> 购物车</a>
+        </li>
         <!-- Authentication Links -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

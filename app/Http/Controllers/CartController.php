@@ -41,9 +41,9 @@ class CartController extends Controller
         return view('shoppingcart.index', ['cartItems' => $cartItems]);
     }
 
-    public function remove(ProductSku $sku, Request $request)   //将商品从购物车删除
+    public function remove($sku, Request $request)   //将商品从购物车删除
     {
-        $request->user()->shoppingCarts()->where('product_sku_id', $sku->id)->delete();
+        $request->user()->shoppingCarts()->where('product_sku_id', $sku)->delete();
 
         return [];
     }
