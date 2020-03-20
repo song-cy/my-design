@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Foundation\Http\Request;
+
 use App\Model\ProductSku;
 
 class AddCartRequest extends Request
