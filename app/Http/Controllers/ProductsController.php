@@ -67,8 +67,8 @@ class ProductsController extends Controller
     }
 
 
-    public function gettype(){
-        $type=Type::where('id','!=','0')->get();
-        return view('pages.root', compact('type'));
-    }
+    // public function gettype(){
+    //     $type=Type::where('id','!=','0')->get();
+    //     return view('pages.root', compact('type'));
+    // }
 }
