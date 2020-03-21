@@ -25,13 +25,13 @@
           </td>
           <td class="product_info">
             <div class="preview">
-              <a target="_blank" href="{{ route('products.show', [$item->productSku->product_id]) }}">
-                <img src="{{ $item->productSku->product->image_url }}">
+              <a target="_blank" href="{{ route('products.show', [$item->productSku->product_id]) }}" >
+                <img src="{{ $item->productSku->product->image_url }}" >
               </a>
             </div>
             <div @if(!$item->productSku->product->status) class="not_on_sale" @endif>
               <span class="product_title">
-                <a target="_blank" href="{{ route('products.show', [$item->productSku->product_id]) }}">{{ $item->productSku->product->product_name }}</a>
+                <a target="_blank" href="{{ route('products.show', [$item->productSku->product_id]) }}" onmouseover="this.style.color='#FF4500'" onmouseout="this.style.color='#3c3c3c'">{{ $item->productSku->product->product_name }}</a>
               </span>
               <span class="sku_title">{{ $item->productSku->title }}</span>
               @if(!$item->productSku->product->status)
@@ -41,10 +41,10 @@
           </td>
           <td><span class="price">￥{{ $item->productSku->price }}</span></td>
           <td>
-            <input type="text" class="form-control form-control-sm amount" @if(!$item->productSku->product->status) disabled @endif name="amount" value="{{ $item->quantity }}">
+            <input type="number" min="0" class="form-control form-control-sm amount" @if(!$item->productSku->product->status) disabled @endif name="amount" value="{{ $item->quantity }}">
           </td>
           <td>
-            <button class="btn btn-sm btn-danger btn-remove">移除</button>
+            <button class="btn btn-sm btn-danger btn-remove">删除</button>
           </td>
         </tr>
       @endforeach
