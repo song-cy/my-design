@@ -35,4 +35,6 @@ Route::prefix('user')->middleware('auth:customer')->group(function (){  //需权
     Route::get('cart', 'CartController@index')->name('cart.index'); //查看购物车
     Route::any('cart/{sku}', 'CartController@remove')->name('cart.remove');//商品从购物车中删除
 
+    Route::post('orders', 'OrdersController@store')->name('orders.store');
+
 });
