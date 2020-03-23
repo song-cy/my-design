@@ -32,7 +32,6 @@ class Order extends Model
 
     protected $fillable = [
         'order_number',
-        'address',
         'total',
         'remark',
         'paid_at',

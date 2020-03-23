@@ -85,7 +85,7 @@
       @endforeach
     </ul>
     <div class="float-right">{{ $orders->render() }}</div>
-  </div>
+  </div></div>
 <!-- </div> -->
 <!-- </div> -->
 <!-- </div> -->
