@@ -8,6 +8,7 @@ use App\Model\Order;
 use Carbon\Carbon;
 use App\Exceptions\InvalidRequestException;
 use App\Jobs\CloseOrder;
+use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
@@ -67,4 +68,18 @@ class OrdersController extends Controller
 
         return $order;
     }
+
+    public function index(Request $request)
+    {
+        $orders = Order::query()
+            // 使用 with 方法预加载，避免N + 1问题
+            ->with(['items.product', 'items.productSku'])
+            ->where('customer_id', $request->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate();
+
+        return view('orders.index', ['orders' => $orders]);
+    }
+
+
 }

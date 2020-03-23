@@ -33,6 +33,9 @@
             <li class="nav-item">
                <a class="nav-link" href="{{ route('cart.index') }}" onmouseover="this.style.color='#FF4500'" onmouseout="this.style.color='#7D7D7D'"><i class="fa fa-shopping-cart" style="color:#FF4500"></i> 购物车</a>
             </li>
+            <li class="nav-item">
+               <a class="nav-link" href="{{ route('orders.index') }}" onmouseover="this.style.color='#FF4500'" onmouseout="this.style.color='#7D7D7D'"></i>我的订单</a>
+            </li>
             <!-- <li><a href="#">SVN</a></li> -->
             <li class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" onmouseover="this.style.color='#FF4500'" onmouseout="this.style.color='#7D7D7D'">
