@@ -39,4 +39,6 @@ Route::prefix('user')->middleware('auth:customer')->group(function (){  //需权
     Route::get('orders', 'OrdersController@index')->name('orders.index');//订单页面
     Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');//订单详情
 
+
+
 });
