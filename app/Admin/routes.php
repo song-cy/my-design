@@ -30,4 +30,13 @@ Route::group([
 
     $router->get('orders', 'OrdersController@index')->name('admin.orders.index');//订单列表
     $router->get('orders/{order}', 'OrdersController@show')->name('admin.orders.show');//查看订单详情
+
+    $router->get('routes', 'RouteController@index')->name('admin.routes.index');//路线列表
+    $router->get('routes/create', 'RouteController@create')->name('admin.routes.create');//添加路线列表
+    $router->post('routes', 'RouteController@store');
+    // $router->delete('routes/{id}', 'RouteController@remove')->name('admin.route.remove');//商品从购物车中删除
+
+
+
+
 });

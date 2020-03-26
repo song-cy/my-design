@@ -114,6 +114,14 @@ class OrdersController extends AdminController
         return $form;
     }
 
+    // public function index( Content $content)
+    // {
+    //     return $content
+    //         ->header('订单列表')
+    //         // body 方法可以接受 Laravel 的视图作为参数
+    //         ->body(view('admin.orders.index'));
+    // }
+
     public function show($id, Content $content)
     {
         return $content

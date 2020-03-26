@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class CustomersController extends Controller
 {
     public function edit(){    //用户修改个人信息页面
-        $county=Route::where('p_id','=','0')->get(); //查询县的数据
+        $county=Route::where('p_id','=','0')->where('id','!=','0')->get(); //查询县的数据
         return view('customer.edit',compact('county'));
     }
 

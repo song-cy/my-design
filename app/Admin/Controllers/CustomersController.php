@@ -107,7 +107,7 @@ class CustomersController extends AdminController
         $form->text('shop_name', '商店名称');
 
         $form->select('country_id','请选择所属县')
-             ->options(Route::where('p_id','=','0')->pluck('name','id'))
+             ->options(Route::where('p_id','=','0')->where('id','!=','0')->pluck('name','id'))
              ->rules('required',['required'=>'请选择所属县'])
              ->load('town_id', '/town');
         $form->select('town_id','请选择所属乡镇')->options(function($id){

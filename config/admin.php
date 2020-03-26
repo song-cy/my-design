@@ -321,7 +321,7 @@ return [
     | each page
     | 是否在页面的右下角显示当前laravel-admin的版本
     */
-    'show_version' => true,
+    'show_version' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -331,7 +331,7 @@ return [
     | Whether to display the environment at the footer of each page
     | 是否在页面的右下角显示当前的环境
     */
-    'show_environment' => true,
+    'show_environment' => false,
 
     /*
     |--------------------------------------------------------------------------
