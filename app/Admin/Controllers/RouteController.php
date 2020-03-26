@@ -18,7 +18,7 @@ class RouteController extends AdminController
      *
      * @var string
      */
-    protected $title = 'App\Model\route';
+    protected $title = '路线管理';
 
     /**
      * Make a grid builder.
@@ -83,7 +83,7 @@ class RouteController extends AdminController
               ->get();
 
         return $content
-            ->header('订单列表')
+            ->header('路线列表')
             // body 方法可以接受 Laravel 的视图作为参数
             ->body(view('admin.orders.index',['routes'=>$routes,'towns'=>$towns]));
     }

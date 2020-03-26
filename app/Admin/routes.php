@@ -36,7 +36,11 @@ Route::group([
     $router->post('routes', 'RouteController@store');
     // $router->delete('routes/{id}', 'RouteController@remove')->name('admin.route.remove');//商品从购物车中删除
 
-
+    $router->get('types', 'TypeController@index')->name('admin.types.index');//商品类型列表
+    $router->get('types/create', 'TypeController@create')->name('admin.types.create');//添加商品类别
+    $router->post('types', 'TypeController@store');
+    $router->get('types/{id}/edit', 'TypeController@edit');//编辑商品类别
+    $router->put('types/{id}', 'TypeController@update');
 
 
 });
