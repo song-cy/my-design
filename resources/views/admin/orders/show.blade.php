@@ -11,7 +11,7 @@
     <table class="table table-bordered">
       <tbody>
       <tr>
-        <td>买家：</td>
+        <td>客户姓名：</td>
         <td>{{ $order->customer->name }}</td>
         <td>支付时间：</td>
         <td>{{ $order->paid_at->format('Y-m-d H:i:s') }}</td>
@@ -22,10 +22,12 @@
         <td>支付渠道单号：</td>
         <td>{{ $order->payment_no }}</td>
       </tr>
-      <!-- <tr>
-        <td>收货地址</td>
-        <td colspan="3">{{ $order->address['address'] }} {{ $order->address['zip'] }} {{ $order->address['contact_name'] }} {{ $order->address['contact_phone'] }}</td>
-      </tr> -->
+      <tr>
+        <td>商店名称</td>
+        <td>{{ $order->customer->shop_name }}</td>
+        <td>商店详细地址</td>
+        <td>{{ $order->customer->route->name }} {{ $order->customer->dress }}</td>
+      </tr>
       <tr>
         <td rowspan="{{ $order->items->count() + 1 }}">商品列表</td>
         <td>商品名称</td>
@@ -41,7 +43,7 @@
       @endforeach
       <tr>
         <td>订单金额：</td>
-        <td colspan="3">￥{{ $order->total}}</td>
+        <td colspan="3" style="color:red">￥{{ $order->total}}</td>
       </tr>
       </tbody>
     </table>

@@ -85,7 +85,7 @@ class RouteController extends AdminController
         return $content
             ->header('路线列表')
             // body 方法可以接受 Laravel 的视图作为参数
-            ->body(view('admin.orders.index',['routes'=>$routes,'towns'=>$towns]));
+            ->body(view('admin.routes.index',['routes'=>$routes,'towns'=>$towns]));
     }
     // public function remove($id)
     // {
