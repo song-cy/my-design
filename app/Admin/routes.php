@@ -30,6 +30,9 @@ Route::group([
 
     $router->get('orders', 'OrdersController@index')->name('admin.orders.index');//订单列表
     $router->get('orders/{order}', 'OrdersController@show')->name('admin.orders.show');//查看订单详情
+    $router->get('orders/{order}/ship', 'OrdersController@ship')->name('admin.orders.ship'); //订单配送
+    $router->get('delivery', 'OrdersController@deliveryorder')->name('admin.orders.delivery'); //订单配送
+
 
     $router->get('routes', 'RouteController@index')->name('admin.routes.index');//路线列表
     $router->get('routes/create', 'RouteController@create')->name('admin.routes.create');//添加路线列表

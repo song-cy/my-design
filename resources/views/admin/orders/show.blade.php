@@ -43,8 +43,18 @@
       @endforeach
       <tr>
         <td>订单金额：</td>
-        <td colspan="3" style="color:red">￥{{ $order->total}}</td>
+        <td style="color:red">￥{{ $order->total}}</td>
+        <td>订单状态：</td>
+        <td style="color:red">{{ \App\Model\Order::$shipStatusMap[$order->delivery_status] }}</td>
       </tr>
+      @if($order->delivery_status === \App\Model\Order::DELIVERY_STATUS_PENDING)
+      <tr>
+        <td colspan="3"></td>
+        <td >
+          <a href="{{ route('admin.orders.ship', [$order->id]) }}" class="btn btn-info" role="button">配送</a>
+        </td>
+      </tr>
+      @endif
       </tbody>
     </table>
   </div>

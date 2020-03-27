@@ -3,11 +3,14 @@
 namespace App\Admin\Controllers;
 
 use App\Model\Order;
+use App\Model\Route;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Show;
 use Encore\Admin\Layout\Content;
+use Illuminate\Http\Request;
+use App\Exceptions\InvalidRequestException;
 
 class OrdersController extends AdminController
 {
@@ -27,11 +30,11 @@ class OrdersController extends AdminController
     {
         $grid = new Grid(new Order);
 
-        $grid->model()->whereNotNull('paid_at')->orderBy('paid_at', 'desc');
+        $grid->model()->whereNotNull('paid_at')->where('delivery_status','pending')->orderBy('paid_at', 'desc');
 
         $grid->order_number('订单流水号');
         // 展示关联关系的字段时，使用 column 方法
-        $grid->column('customer.name', '买家');
+        $grid->column('customer.name', '客户姓名');
         $grid->total('总金额')->sortable();
         $grid->column('路线')->display(function(){
             return $this->customer->route->route_id.'号路线';
@@ -122,11 +125,53 @@ class OrdersController extends AdminController
     //         ->body(view('admin.orders.index'));
     // }
 
-    public function show($id, Content $content)
+    public function show($id, Content $content)//订单详情
     {
         return $content
             ->header('查看订单')
             // body 方法可以接受 Laravel 的视图作为参数
             ->body(view('admin.orders.show', ['order' => Order::find($id)]));
     }
+
+    public function ship(Order $order, Request $request)//处理订单
+    {
+        // 判断当前订单是否已支付
+        if (!$order->paid_at) {
+            throw new InvalidRequestException('该订单未付款');
+        }
+        // 判断当前订单发货状态是否为未发货
+        if ($order->delivery_status !== Order::DELIVERY_STATUS_PENDING) {
+            throw new InvalidRequestException('该订单已配送');
+        }
+        // Laravel 5.5 之后 validate 方法可以返回校验过的值
+        // $data = $this->validate($request, [
+        //     'express_company' => ['required'],
+        //     'express_no'      => ['required'],
+        // ], [], [
+        //     'express_company' => '物流公司',
+        //     'express_no'      => '物流单号',
+        // ]);
+        // 将订单发货状态改为已发货，并存入物流信息
+        $order->update([
+            'delivery_status' => Order::DELIVERY_STATUS_DELIVERED,
+            // 我们在 Order 模型的 $casts 属性里指明了 ship_data 是一个数组
+            // 因此这里可以直接把数组传过去
+            // 'ship_data'   => $data,
+        ]);
+
+        // 返回上一页
+        return redirect()->back();
+    }
+
+    public function deliveryorder( Content $content)
+    {
+        $orders=Order::where('paid_at','!=','null')->where('delivery_status','delivered')->get();
+        $routes=Route::where('route_id','!=','0')->distinct()->get('route_id');
+
+        return $content
+            ->header('待配送订单')
+            // body 方法可以接受 Laravel 的视图作为参数
+            ->body(view('admin.orders.delivery_order',['routes'=>$routes,'orders'=>$orders]));
+    }
+
 }

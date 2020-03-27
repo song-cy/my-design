@@ -38,7 +38,7 @@
         </div>
     </div>
     @endforeach
-
+</div>
 <script type="text/javascript">
 // $(function () {
 //     $('#1').collapse('hide')
