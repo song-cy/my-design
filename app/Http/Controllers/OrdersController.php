@@ -41,4 +41,21 @@ class OrdersController extends Controller
         return view('orders.show', ['order' => $order->load(['items.productSku', 'items.product'])]);
         //loda()延迟预加载,是在已经查询出来的模型上调用，而 with() 则是在 ORM 查询构造器上调用
     }
+
+    public function received(Order $order, Request $request)
+    {
+        // 校验权限
+        $this->authorize('own', $order);
+
+        // 判断订单的发货状态是否为已发货
+        if ($order->delivery_status !== Order::DELIVERY_STATUS_DELIVERED) {
+            throw new InvalidRequestException('发货状态不正确');
+        }
+
+        // 更新发货状态为已收到
+        $order->update(['delivery_status' => Order::DELIVERY_STATUS_RECEIVED]);
+
+        // 返回原页面
+        return $order;
+    }
 }

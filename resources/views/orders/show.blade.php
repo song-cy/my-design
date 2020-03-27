@@ -42,9 +42,15 @@
     </table>
     <div class="order-bottom">
       <div class="order-info">
-
-        <div class="line"><div class="line-label">订单备注：</div><div class="line-value">{{ $order->remark ?: '-' }}</div></div>
-        <div class="line"><div class="line-label">订单编号：</div><div class="line-value">{{ $order->order_number }}</div></div>
+        <div class="line">
+            <div class="line-label">订单备注：</div><div class="line-value">{{ $order->remark ?: '-' }}</div>
+        </div>
+        <div class="line"><div class="line-label">订单编号：</div><div class="line-value">{{ $order->order_number }}</div>
+        </div>
+        <div class="line">
+          <div class="line-label">物流状态：</div>
+          <div class="line-value">{{ \App\Model\Order::$shipStatusMap[$order->delivery_status] }}</div>
+        </div>
       </div>
       <div class="order-summary text-right">
         <div class="total-amount">
@@ -66,18 +72,54 @@
               未支付
             @endif
           </div>
+
+            <!-- 如果订单的发货状态为已发货则展示确认收货按钮 -->
+          @if($order->delivery_status === \App\Model\Order::DELIVERY_STATUS_DELIVERED)
+          <div class="receive-button">
+            <button type="button" id="btn-receive" class="btn btn-sm btn-success">确认收货</button>
+          </div>
+          @endif
         </div>
         <!-- 支付按钮开始 -->
-@if(!$order->paid_at && !$order->closed)
-<div class="payment-buttons">
-  <a class="btn btn-primary btn-sm" href="{{ route('payment.alipay', ['order' => $order->id]) }}">支付宝支付</a>
-</div>
-@endif
-<!-- 支付按钮结束 --
+        @if(!$order->paid_at && !$order->closed)
+        <div class="payment-buttons">
+          <a class="btn btn-primary btn-sm" href="{{ route('payment.alipay', ['order' => $order->id]) }}">支付宝支付</a>
+        </div>
+        @endif
+<!-- 支付按钮结束 -->
       </div>
     </div>
   </div>
 </div>
 </div>
 </div>
+@endsection
+@section('scriptsAfterJs')
+<script>
+  $(document).ready(function() {
+    // 确认收货按钮点击事件
+    $('#btn-receive').click(function() {
+      // 弹出确认框
+      swal({
+        title: "确认已经收到商品？",
+        icon: "warning",
+        dangerMode: true,
+        buttons: ['取消', '确认收到'],
+      })
+      .then(function(ret) {
+        // 如果点击取消按钮则不做任何操作
+        if (!ret) {
+          return;
+        }
+        // ajax 提交确认操作
+        axios.post('{{ route('orders.received', [$order->id]) }}')
+          .then(function () {
+            // 刷新页面
+            location.reload();
+          })
+      });
+    });
+
+  });
+</script>
 @endsection
