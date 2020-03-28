@@ -39,6 +39,7 @@ Route::prefix('user')->middleware('auth:customer')->group(function (){  //需权
     Route::get('orders/index/{status?}', 'OrdersController@index')->name('orders.index');//订单页面
     Route::get('orders/{order}', 'OrdersController@show')->name('orders.show');//订单详情
     Route::post('orders/{order}/received', 'OrdersController@received')->name('orders.received');//客户确认送达
+    Route::post('orders/{order}/apply_refund', 'OrdersController@applyRefund')->name('orders.apply_refund');//申请退货
 
     Route::get('payment/{order}/alipay', 'PaymentController@payByAlipay')->name('payment.alipay');
     Route::get('payment/alipay/return', 'PaymentController@alipayReturn')->name('payment.alipay.return');

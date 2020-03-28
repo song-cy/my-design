@@ -23,10 +23,7 @@
       <a class="nav-link active" data-toggle="tab" href="#home">所有商品</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#menu1">购买过</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
+      <a class="nav-link"  href="{{route('products.index')}}">购买过</a>
     </li>
 </ul>
 

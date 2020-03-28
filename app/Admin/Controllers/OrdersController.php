@@ -30,7 +30,7 @@ class OrdersController extends AdminController
     {
         $grid = new Grid(new Order);
 
-        $grid->model()->whereNotNull('paid_at')->where('delivery_status','pending')->orderBy('paid_at', 'desc');
+        $grid->model()->whereNotNull('paid_at')->orderBy('paid_at', 'desc');
 
         $grid->order_number('订单流水号');
         // 展示关联关系的字段时，使用 column 方法
