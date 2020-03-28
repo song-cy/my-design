@@ -23,16 +23,35 @@ class OrdersController extends Controller
         return $orderService->store($customer, $request->input('remark'), $request->input('items'));
     }
 
-    public function index(Request $request)
+    public function index(Request $request,$status='null')
     {
-        $orders = Order::query()
+        if($status == 'obligation'){  //待付款订单
+            $orders = Order::query()
             // 使用 with 方法预加载，避免N + 1问题
+            ->with(['items.product', 'items.productSku'])
+            ->where('customer_id', $request->user()->id)
+            ->where('paid_at',null)
+            ->where('closed','0')
+            ->orderBy('created_at', 'desc')
+            ->paginate();
+        }else if($status =='delivery'){ //待配送订单
+             $orders = Order::query()
+            ->with(['items.product', 'items.productSku'])
+            ->where('customer_id', $request->user()->id)
+            ->where('paid_at','!=',null)
+            ->where('delivery_status','delivered')
+            ->orderBy('created_at', 'desc')
+            ->paginate();
+        }else{  //所有订单
+            $orders = Order::query()
             ->with(['items.product', 'items.productSku'])
             ->where('customer_id', $request->user()->id)
             ->orderBy('created_at', 'desc')
             ->paginate();
+        }
 
-        return view('orders.index', ['orders' => $orders]);
+
+        return view('orders.index', ['orders' => $orders,'sta'=>$status]);
     }
 
     public function show(Order $order, Request $request)
