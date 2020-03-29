@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Order;
 use App\Exceptions\InvalidRequestException;
 use Carbon\Carbon;
+use App\Events\OrderPaid;
 
 class PaymentController extends Controller
 {
@@ -67,6 +68,7 @@ class PaymentController extends Controller
             'payment_no'     => $data->trade_no, // 支付宝订单号
         ]);
 
+        $this->afterPaid($order); //支付成功事件
         return app('alipay')->success();
     }
 }
