@@ -11,6 +11,7 @@ use Encore\Admin\Show;
 use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 use App\Exceptions\InvalidRequestException;
+use App\Http\Requests\Admin\HandleRefundRequest;//校验商家处理退货申请请求
 
 class OrdersController extends AdminController
 {
@@ -172,6 +173,30 @@ class OrdersController extends AdminController
             ->header('待配送订单')
             // body 方法可以接受 Laravel 的视图作为参数
             ->body(view('admin.orders.delivery_order',['routes'=>$routes,'orders'=>$orders]));
+    }
+
+    public function handleRefund(Order $order, HandleRefundRequest $request) //商家处理退货申请
+    {
+        // 判断订单状态是否正确
+        if ($order->refund_status !== Order::REFUND_STATUS_APPLIED) {
+            throw new InvalidRequestException('订单状态不正确');
+        }
+        // 是否同意退款
+        if ($request->input('agree')) {
+            // 同意退款的逻辑这里先留空
+            // todo
+        } else {
+            // 将拒绝退款理由放到订单的 extra 字段中
+            $extra = $order->extra ?: [];
+            $extra['refund_disagree_reason'] = $request->input('reason');
+            // 将订单的退款状态改为未退款
+            $order->update([
+                'refund_status' => Order::REFUND_STATUS_PENDING,
+                'extra'         => $extra,
+            ]);
+        }
+
+        return $order;
     }
 
 }

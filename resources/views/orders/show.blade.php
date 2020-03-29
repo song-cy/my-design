@@ -84,6 +84,12 @@
             @endif
           </div>
 
+          @if(isset($order->extra['refund_disagree_reason']))
+        <div>
+          <span>拒绝退款理由：</span>
+          <div class="value">{{ $order->extra['refund_disagree_reason'] }}</div>
+        </div>
+        @endif
             <!-- 如果订单的发货状态为已发货则展示确认收货按钮 -->
           @if($order->delivery_status === \App\Model\Order::DELIVERY_STATUS_DELIVERED)
           <div class="receive-button">
