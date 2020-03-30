@@ -23,7 +23,7 @@
       <a class="nav-link active" data-toggle="tab" href="#home">所有商品</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link"  href="{{route('products.index')}}">购买过</a>
+      <a class="nav-link"  data-toggle="tab" href="#menu2">购买过</a>
     </li>
 </ul>
 
@@ -94,30 +94,33 @@
             </div>
         </div>
     </div>
-
-    <div id="menu1" class="container tab-pane fade"><br>
-        <h3>Menu 1</h3>
-        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
     <div id="menu2" class="container tab-pane fade"><br>
-        <div class="flex-container">
-            <div class="flex-item">flex item 1</div>
-            <div class="flex-item">flex item 2</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 1</div>
-            <div class="flex-item">flex item 2</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 3</div>
-            <div class="flex-item">flex item 3</div>
-        </div>
+        <div class="row products-list">
+                @foreach($products as $product)
+                    <div class="col-2 product-item" >
+                        <div class="product-content">
+                            <div class="top">
+                                <a href="{{ route('products.show', ['product' => $product->id]) }}">
+                                    <img src="{{ $product->image_url }}" alt="">
+                                </a>
+                                <div class="price">
+                                    <b>￥</b>{{ $product->price }}
+                                </div>
+                                <div class="title">
+                                    <a href="{{ route('products.show', ['product' => $product->id]) }}" onmouseover="this.style.color='#FF4500'" onmouseout="this.style.color='#333'">{{ $product->product_name }}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="bottom">
+                                <div class="sold_count">
+                                    销量 <span>{{ $product->sold_count }}笔</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+                <div class="float-right">{{ $products->appends($filters)->render() }}</div>
     </div>
 </div>
 

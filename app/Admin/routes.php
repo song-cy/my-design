@@ -28,10 +28,18 @@ Route::group([
     $router->put('products/{id}', 'ProductsController@update');
     // $router->get('products/{id}', 'ProductsController@show');
 
-    $router->get('orders', 'OrdersController@index')->name('admin.orders.index');//订单列表
-    $router->get('orders/{order}', 'OrdersController@show')->name('admin.orders.show');//查看订单详情
-    $router->get('orders/{order}/ship', 'OrdersController@ship')->name('admin.orders.ship'); //订单配送
-    $router->get('delivery', 'OrdersController@deliveryorder')->name('admin.orders.delivery'); //订单配送
+    $router->get('orders/pending', 'OrdersController@index')->name('admin.orders.index');//待处理订单列表
+    $router->get('orders/pending/{order}', 'OrdersController@show')->name('admin.orders.show');//查看待处理订单详情
+    $router->get('orders/{order}/ship', 'OrdersController@ship')->name('admin.orders.ship'); //处理订单
+
+    $router->get('orders/delivery', 'OrdersController@delivery')->name('admin.orders.delivery'); //待配送订单列表
+    $router->get('orders/delivery/{order}', 'OrdersController@show')->name('admin.delivery.show'); //查看待配送订单详情
+
+    $router->get('orders/finished', 'OrdersController@finished')->name('admin.orders.finished'); //已完成订单列表
+    $router->get('orders/finished/{order}', 'OrdersController@show')->name('admin.finished.show'); //查看已完成订单详情
+
+    $router->get('orders/refund', 'OrdersController@refund')->name('admin.orders.refund'); //客户申请退货订单列表
+    $router->get('orders/refund/{order}', 'OrdersController@show')->name('admin.refund.show'); //查看已完成订单详情
     $router->post('orders/{order}/refund', 'OrdersController@handleRefund')->name('admin.orders.handle_refund');//处理退货
 
 

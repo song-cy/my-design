@@ -40,7 +40,7 @@ class OrdersController extends Controller
             ->with(['items.product', 'items.productSku'])
             ->where('customer_id', $request->user()->id)
             ->where('paid_at','!=',null)
-            ->where('delivery_status','delivered')
+            ->whereIn('delivery_status',['pending','delivered'])
             ->orderBy('created_at', 'desc')
             ->paginate();
         }else{  //所有订单

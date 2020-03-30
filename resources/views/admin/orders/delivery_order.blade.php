@@ -19,7 +19,7 @@
                         <td >支付时间</td>
                         <td >配送状态</td>
                         <td >退款状态</td>
-                        <!-- <td >操作</td> -->
+                        <td >操作</td>
                     </thead>
                     @foreach($orders as $order)
                        @if($order->customer->route->route_id === $route->route_id)
@@ -30,7 +30,7 @@
                         <td >{{$order->paid_at}}</td>
                         <td >{{ \App\Model\Order::$shipStatusMap[$order->delivery_status] }}</td>
                         <td >{{ \App\Model\Order::$refundStatusMap[$order->refund_status] }}</td>
-
+                        <td ><a href="{{route('admin.delivery.show',['order'=>$order->id])}}">订单详情</a></td>
                     </tr>
                        @endif
                     @endforeach
