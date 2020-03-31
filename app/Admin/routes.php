@@ -54,5 +54,11 @@ Route::group([
     $router->get('types/{id}/edit', 'TypeController@edit');//编辑商品类别
     $router->put('types/{id}', 'TypeController@update');
 
+    $router->get('finances', 'FinancesController@index');//资金明细列表
+    $router->get('finances/create', 'FinancesController@create');//创建资金记录
+    $router->post('finances', 'FinancesController@store');
+    $router->get('finances/{id}/edit', 'FinancesController@edit');//编辑商品
+    $router->put('finances/{id}', 'FinancesController@update');
+    $router->get('finances/{id}', 'FinancesController@show');
 
 });
