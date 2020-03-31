@@ -20,6 +20,7 @@ class OrderService
             $order   = new Order([
                 'remark'       => $remark,
                 'total' => 0,
+                'total_profit'=>0
             ]);
             // 订单关联到当前用户
             $order->customer()->associate($customer);
@@ -27,6 +28,7 @@ class OrderService
             $order->save();
 
             $total = 0;
+            $total_profit=0;
             // 遍历用户提交的 SKU
             foreach ($items as $data) {
                 $sku  = ProductSku::find($data['sku_id']);
@@ -39,7 +41,7 @@ class OrderService
                 $item->productSku()->associate($sku);
                 $item->save();
                 $total += $sku->price * $data['amount'];
-                $total_profit+=($sku->price - $sku->buying_price) * $data['amount'];
+                $total_profit += ($sku->price - $sku->buying_price) * $data['amount'];
                 if ($sku->decreaseStock($data['amount']) <= 0) {
                     throw new InvalidRequestException('该商品库存不足');
                 }
