@@ -43,6 +43,7 @@ Route::group([
     $router->post('orders/{order}/refund', 'OrdersController@handleRefund')->name('admin.orders.handle_refund');//处理退货
 
     $router->get('orders/exchange', 'OrdersController@exchange')->name('admin.orders.exchange'); //客户申请换货订单列表
+    $router->get('orders/exchange/{order}', 'OrdersController@show')->name('admin.exchange.show'); //查看已完成订单详情
     $router->post('orders/{order}/exchange', 'OrdersController@handleExchange')->name('admin.orders.handle_exchange');//处理换货
 
 

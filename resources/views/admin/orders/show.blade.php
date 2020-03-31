@@ -11,6 +11,8 @@
         <a href="{{ route('admin.orders.delivery') }}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 列表</a>
         @elseif(URL::current() === 'http://tiantianw.com/admin/orders/refund/'.$order->id)
         <a href="{{ route('admin.orders.refund') }}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 列表</a>
+        @elseif(URL::current() === 'http://tiantianw.com/admin/orders/exchange/'.$order->id)
+        <a href="{{ route('admin.orders.exchange') }}" class="btn btn-sm btn-default"><i class="fa fa-list"></i> 列表</a>
         @endif
       </div>
     </div>

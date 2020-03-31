@@ -17,9 +17,9 @@
                         <td >订单流水号</td>
                         <td >客户姓名</td>
                         <td >总金额</td>
-                        <td >支付时间</td>
+                        <td >乡/镇</td>
                         <td >配送状态</td>
-                        <td >退款状态</td>
+                        <td >支付时间</td>
                         <td >操作</td>
                     </thead>
                     @foreach($orders as $order)
@@ -28,9 +28,9 @@
                         <td >{{$order->order_number}}</td>
                         <td >{{$order->customer->name}}</td>
                         <td >{{$order->total}}</td>
+                        <td >{{$order->customer->route->name}}</td>
+                        <td ><span class="label label-success">{{ \App\Model\Order::$shipStatusMap[$order->delivery_status] }}</span></td>
                         <td >{{$order->paid_at}}</td>
-                        <td >{{ \App\Model\Order::$shipStatusMap[$order->delivery_status] }}</td>
-                        <td >{{ \App\Model\Order::$refundStatusMap[$order->refund_status] }}</td>
                         <td ><a href="{{route('admin.delivery.show',['order'=>$order->id])}}">订单详情</a></td>
                     </tr>
                        @endif
