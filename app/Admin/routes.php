@@ -42,6 +42,9 @@ Route::group([
     $router->get('orders/refund/{order}', 'OrdersController@show')->name('admin.refund.show'); //查看已完成订单详情
     $router->post('orders/{order}/refund', 'OrdersController@handleRefund')->name('admin.orders.handle_refund');//处理退货
 
+    $router->post('orders/{order}/exchange', 'OrdersController@handleExchange')->name('admin.orders.handle_exchange');//处理换货
+
+
 
     $router->get('routes', 'RouteController@index')->name('admin.routes.index');//路线列表
     $router->get('routes/create', 'RouteController@create')->name('admin.routes.create');//添加路线列表

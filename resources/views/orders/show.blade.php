@@ -96,7 +96,7 @@
 
           @if(isset($order->extra['refund_disagree_reason']))
         <div>
-          <span>拒绝退款理由：</span>
+          <span>拒绝退款/换货理由：</span>
           <div class="value">{{ $order->extra['refund_disagree_reason'] }}</div>
         </div>
         @endif
