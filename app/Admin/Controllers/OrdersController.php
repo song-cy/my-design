@@ -12,6 +12,7 @@ use Encore\Admin\Layout\Content;
 use Illuminate\Http\Request;
 use App\Exceptions\InvalidRequestException;
 use App\Http\Requests\Admin\HandleRefundRequest;//校验商家处理退货申请请求
+use Encore\Admin\Widgets\Box;
 
 class OrdersController extends AdminController
 {
@@ -38,6 +39,7 @@ class OrdersController extends AdminController
         // 展示关联关系的字段时，使用 column 方法
         $grid->column('customer.name', '客户姓名');
         $grid->total('总金额')->sortable();
+        $grid->total_profit('总利润')->sortable();
         $grid->column('路线')->display(function(){
             return $this->customer->route->route_id.'号路线';
         });
@@ -61,7 +63,6 @@ class OrdersController extends AdminController
                 $batch->disableDelete();
             });
         });
-
         return $grid;
     }
 

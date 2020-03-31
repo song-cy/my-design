@@ -443,7 +443,12 @@ return [
             'theme' => 'snow',
             'height' => '200px',
         ]
-    ]
+    ],
     // 新增编辑器配置结束
+    'chartjs' => [
+
+            // Set to `false` if you want to disable this extension
+            'enable' => true,
+        ]
     ],
 ];

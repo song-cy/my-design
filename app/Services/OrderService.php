@@ -39,12 +39,13 @@ class OrderService
                 $item->productSku()->associate($sku);
                 $item->save();
                 $total += $sku->price * $data['amount'];
+                $total_profit+=($sku->price - $sku->buying_price) * $data['amount'];
                 if ($sku->decreaseStock($data['amount']) <= 0) {
                     throw new InvalidRequestException('该商品库存不足');
                 }
             }
             // 更新订单总金额
-            $order->update(['total' => $total]);
+            $order->update(['total' => $total,'total_profit'=>$total_profit]);
 
             // 将下单的商品从购物车中移除
             $skuIds = collect($items)->pluck('sku_id')->all();

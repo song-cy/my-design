@@ -1,3 +1,4 @@
+<!-- @include('admin.chart.r_chart') -->
 <div class="panel-group" id="accordion">
     @foreach($routes as $route)
     <div class="panel panel-info">

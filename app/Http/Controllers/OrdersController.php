@@ -18,8 +18,7 @@ class OrdersController extends Controller
     // 利用 Laravel 的自动解析功能注入 CartService 类
     public function store(OrderRequest $request, OrderService $orderService)
     {
-        $customer    = $request->user();
-        // $address = UserAddress::find($request->input('address_id'));
+        $customer = $request->user();
 
         return $orderService->store($customer, $request->input('remark'), $request->input('items'));
     }
