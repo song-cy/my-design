@@ -74,7 +74,7 @@ class OrdersController extends AdminController
         return $content
             ->header('待处理订单')
             // body 方法可以接受 Laravel 的视图作为参数
-            ->body(OrdersController::grid(['dstatus'=>'pending']));
+            ->body(OrdersController::grid(['status'=>'pending']));
     }
 
     public function finished(Content $content){
@@ -95,10 +95,11 @@ class OrdersController extends AdminController
             ->body(view('admin.orders.delivery_order',['routes'=>$routes,'orders'=>$orders]));
     }
 
-     public function refund(Content $content){
+     public function lay($refund,$exchange){
         $grid = new Grid(new Order);
 
-        $grid->model()->whereNotNull('paid_at')->where('refund_status','!=','pending')->where('delivery_status','received')->orderBy('paid_at', 'desc');//客户确认送达，且申请退货的订单
+        $grid->model()->whereNotNull('paid_at')->where('delivery_status','received')->where('refund_status',$refund)
+             ->where('exchange_status',$exchange)->orderBy('paid_at', 'desc');//客户确认送达，且申请退货的订单
 
         $grid->order_number('订单流水号');
         // 展示关联关系的字段时，使用 column 方法
@@ -131,10 +132,21 @@ class OrdersController extends AdminController
             });
         });
 
+        return $grid;
+    }
+
+    public function refund(Content $content){
         return $content
             ->header('申请退货订单')
             // body 方法可以接受 Laravel 的视图作为参数
-            ->body($grid);
+            ->body(OrdersController::lay(['refund'=>'applied'],['exchange'=>'pending']));
+    }
+
+    public function exchange(Content $content){
+        return $content
+            ->header('申请换货订单')
+            // body 方法可以接受 Laravel 的视图作为参数
+            ->body(OrdersController::lay(['refund'=>'pending'],['exchange'=>'applied']));
     }
 
     public function show($id, Content $content)//订单详情
@@ -172,8 +184,13 @@ class OrdersController extends AdminController
         }
         // 是否同意换货
         if ($request->input('agree')) {
-            // 同意退款的逻辑这里先留空
-            // todo
+             // 清空拒绝换货理由
+            $extra = $order->extra ?: [];
+            unset($extra['refund_disagree_reason']);
+            $order->update([
+                'exchange_status' => Order::REFUND_STATUS_SUCCESS,
+                'extra' => $extra,
+            ]);
         } else {
             // 将拒绝换货理由放到订单的 extra 字段中
             $extra = $order->extra ?: [];
