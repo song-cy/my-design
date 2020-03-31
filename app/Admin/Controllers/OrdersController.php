@@ -47,8 +47,11 @@ class OrdersController extends AdminController
         $grid->delivery_status('配送状态')->display(function($value) {
             return Order::$shipStatusMap[$value];
         });
-        $grid->refund_status('退款状态')->display(function($value) {
+        $grid->refund_status('退货状态')->display(function($value) {
             return Order::$refundStatusMap[$value];
+        });
+        $grid->exchange_status('换货状态')->display(function($value) {
+            return Order::$exchangeStatusMap[$value];
         });
         // 禁用创建按钮，后台不需要创建订单
         $grid->disableCreateButton();
@@ -110,6 +113,9 @@ class OrdersController extends AdminController
         });
         $grid->refund_status('退款状态')->display(function($value) {
             return Order::$refundStatusMap[$value];
+        });
+        $grid->exchange_status('换货状态')->display(function($value) {
+            return Order::$exchangeStatusMap[$value];
         });
         // 禁用创建按钮，后台不需要创建订单
         $grid->disableCreateButton();

@@ -13,16 +13,30 @@ class Order extends Model
     const REFUND_STATUS_SUCCESS = 'success';
     const REFUND_STATUS_FAILED = 'failed';
 
+    // const EXCHANGE_STATUS_PENDING = 'pending';
+    // const EXCHANGE_STATUS_APPLIED = 'applied';
+    // const EXCHANGE_STATUS_PROCESSING = 'processing';
+    // const EXCHANGE_STATUS_SUCCESS = 'success';
+    // const EXCHANGE_STATUS_FAILED = 'failed';
+
     const DELIVERY_STATUS_PENDING = 'pending';
     const DELIVERY_STATUS_DELIVERED = 'delivered';
     const DELIVERY_STATUS_RECEIVED = 'received';
 
     public static $refundStatusMap = [
-        self::REFUND_STATUS_PENDING    => '未退款',
-        self::REFUND_STATUS_APPLIED    => '已申请退款',
-        self::REFUND_STATUS_PROCESSING => '退款中',
-        self::REFUND_STATUS_SUCCESS    => '退款成功',
-        self::REFUND_STATUS_FAILED     => '退款失败',
+        self::REFUND_STATUS_PENDING    => '未退货',
+        self::REFUND_STATUS_APPLIED    => '已申请退货',
+        self::REFUND_STATUS_PROCESSING => '退货中',
+        self::REFUND_STATUS_SUCCESS    => '退货成功',
+        self::REFUND_STATUS_FAILED     => '退货失败',
+    ];
+
+    public static $exchangeStatusMap = [
+        self::REFUND_STATUS_PENDING    => '未换货',
+        self::REFUND_STATUS_APPLIED    => '已申请换货',
+        self::REFUND_STATUS_PROCESSING => '换货中',
+        self::REFUND_STATUS_SUCCESS    => '换货成功',
+        self::REFUND_STATUS_FAILED     => '换货失败',
     ];
 
     public static $shipStatusMap = [
@@ -40,6 +54,7 @@ class Order extends Model
         'payment_method',
         'payment_no',
         'refund_status',
+        'exchange_status',
         'refund_no',
         'closed',
         'delivery_status',

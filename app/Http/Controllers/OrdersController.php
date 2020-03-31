@@ -101,4 +101,28 @@ class OrdersController extends Controller
 
         return $order;
     }
+
+    public function applyExchange(Order $order, ApplyRefundRequest $request)   //申请换货
+    {
+        // 校验订单是否属于当前用户
+        $this->authorize('own', $order);
+        // 判断订单是否已付款
+        if (!$order->paid_at) {
+            throw new InvalidRequestException('该订单未支付，不可换货');
+        }
+        // 判断订单换货状态是否正确
+        if ($order->refund_status !== Order::REFUND_STATUS_PENDING) {
+            throw new InvalidRequestException('该订单已经申请过换货，请勿重复申请');
+        }
+        // 将用户输入的换货理由放到订单的 extra 字段中
+        $extra  = $order->extra ?: [];
+        $extra['refund_reason'] = $request->input('reason');
+        // 将订单退款状态改为已申请退款
+        $order->update([
+            'exchange_status' => Order::REFUND_STATUS_APPLIED,
+            'extra'         => $extra,
+        ]);
+
+        return $order;
+    }
 }
